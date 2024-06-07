@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useReducer } from "react";
 
 import "./App.css";
 import "./theme.css";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "CHANGE_NAME":
+      return { ...state, name: action.newvalue };
+    case "CHANGE_AGE":
+      return { ...state, age: action.newvalue };
+    default:
+      return state;
+  }
+};
+const initialData = {
+  name: "ebrahem sobhy",
+  age: 23,
+  startCount: 0,
+  theme: "teal",
+};
+
 function App() {
-  const [person, setPerson] = useState("SOBHY");
-  const [age, setAge] = useState("22");
-  const [count, setCount] = useState(1);
-  const [theme, settheme] = useState("");
+  const [allData, dispatch] = useReducer(reducer, initialData);
+
   return (
     <>
-      <div className={`App ${theme}`}>
-        <button
-          onClick={() => {
-            settheme(theme == "" ? "dark" : "");
-          }}
-          style={{ marginTop: "50px" }}
-        >
-          Toggle Theme
-        </button>
+      <div className={`App ${allData.theme} `}>
+        <button style={{ marginTop: "50px" }}>Toggle Theme</button>
 
-<div   onChange={() => {  
-            settheme(theme == "" ? "dark" : "");
-          }} style={{marginTop:"44px"}}>
+        <div style={{ marginTop: "44px" }}>
           <label htmlFor="theme" className="theme">
             <span>Light</span>
             <span className="theme__toggle-wrap">
@@ -48,48 +55,20 @@ function App() {
             </span>
             <span>Dark</span>
           </label>
-</div>
-
-        <div style={{ marginTop: "44px" }}>
-          <button
-            onClick={() => {
-              settheme("light");
-            }}
-            style={{ marginRight: "26px" }}
-          >
-            Light
-          </button>
-
-          <button
-            onClick={() => {
-              settheme("dark");
-            }}
-            style={{ marginRight: "26px" }}
-          >
-            Dark
-          </button>
-          <button
-            onClick={() => {
-              settheme("gray");
-            }}
-            style={{ marginRight: "26px" }}
-          >
-            Gray
-          </button>
-          <button
-            onClick={() => {
-              settheme("teal");
-            }}
-            style={{ marginRight: "26px" }}
-          >
-            Teal
-          </button>
         </div>
 
-        <h1 style={{ marginTop: "66px" }}>my name is {person}</h1>
+        <div style={{ marginTop: "44px" }}>
+          <button style={{ marginRight: "26px" }}>Light</button>
+
+          <button style={{ marginRight: "26px" }}>Dark</button>
+          <button style={{ marginRight: "26px" }}>Gray</button>
+          <button style={{ marginRight: "26px" }}>Teal</button>
+        </div>
+
+        <h1 style={{ marginTop: "66px" }}>my name is {allData.name} </h1>
         <button
           onClick={() => {
-            setPerson("ELRAYEK***");
+            dispatch({ type: "CHANGE_NAME", newvalue: "ELRAYEK***" });
           }}
         >
           ChangeName
@@ -97,24 +76,18 @@ function App() {
 
         <br />
 
-        <h1>my age is {age}</h1>
+        <h1>my age is {allData.age} </h1>
 
         <button
           onClick={() => {
-            setAge("23");
+            dispatch({ type: "CHANGE_AGE", newvalue: "24" });
           }}
         >
           Change Age
         </button>
         <br />
 
-        <button
-          onClick={() => {
-            setCount(count + 1);
-          }}
-        >
-          count is {count}
-        </button>
+        <button>count is {allData.startCount}</button>
       </div>
     </>
   );
