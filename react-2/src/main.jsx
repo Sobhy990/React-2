@@ -5,19 +5,22 @@ import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Page2 from "./Page/Page2.jsx";
+import { ThemeContext } from "./context/ThemeContext.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/> ,
+    element: <App />,
   },
   {
     path: "/Page2",
-    element:<Page2/> ,
+    element: <Page2 />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeContext>
+      <RouterProvider router={router} />
+    </ThemeContext>
   </React.StrictMode>
 );
