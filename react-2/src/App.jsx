@@ -2,6 +2,7 @@ import { useReducer } from "react";
 
 import "./App.css";
 import "./theme.css";
+import { Link } from "react-router-dom";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -9,6 +10,11 @@ const reducer = (state, action) => {
       return { ...state, name: action.newvalue };
     case "CHANGE_AGE":
       return { ...state, age: action.newvalue };
+    case "CHANGE_COUNT":
+      return { ...state, startCount: action.newvalue };
+    case "CHANGE_THEME":
+      return { ...state, theme: action.newvalue };
+
     default:
       return state;
   }
@@ -26,9 +32,39 @@ function App() {
   return (
     <>
       <div className={`App ${allData.theme} `}>
-        <button style={{ marginTop: "50px" }}>Toggle Theme</button>
+      
+      <Link to="/page2">
+    GO TO PAGE 2
+      </Link>
+      
+      
+      
+      
+      
+      
+      
+      
+        <button
+          onClick={() => {
+            dispatch({
+              type: "CHANGE_THEME",
+              newvalue: allData.theme == "teal" ? "dark" : "teal",
+            });
+          }}
+          style={{ marginTop: "50px" }}
+        >
+          Toggle Theme
+        </button>
 
-        <div style={{ marginTop: "44px" }}>
+        <div
+          onChange={() => {
+            dispatch({
+              type: "CHANGE_THEME",
+              newvalue: allData.theme == "teal" ? "dark" : "teal",
+            });
+          }}
+          style={{ marginTop: "44px" }}
+        >
           <label htmlFor="theme" className="theme">
             <span>Light</span>
             <span className="theme__toggle-wrap">
@@ -58,11 +94,39 @@ function App() {
         </div>
 
         <div style={{ marginTop: "44px" }}>
-          <button style={{ marginRight: "26px" }}>Light</button>
+          <button
+            onClick={() => {
+              dispatch({ type: "CHANGE_THEME", newvalue: "light" });
+            }}
+            style={{ marginRight: "26px" }}
+          >
+            Light
+          </button>
 
-          <button style={{ marginRight: "26px" }}>Dark</button>
-          <button style={{ marginRight: "26px" }}>Gray</button>
-          <button style={{ marginRight: "26px" }}>Teal</button>
+          <button
+            onClick={() => {
+              dispatch({ type: "CHANGE_THEME", newvalue: "dark" });
+            }}
+            style={{ marginRight: "26px" }}
+          >
+            Dark
+          </button>
+          <button
+            onClick={() => {
+              dispatch({ type: "CHANGE_THEME", newvalue: "gray" });
+            }}
+            style={{ marginRight: "26px" }}
+          >
+            Gray
+          </button>
+          <button
+            onClick={() => {
+              dispatch({ type: "CHANGE_THEME", newvalue: "teal" });
+            }}
+            style={{ marginRight: "26px" }}
+          >
+            Teal
+          </button>
         </div>
 
         <h1 style={{ marginTop: "66px" }}>my name is {allData.name} </h1>
@@ -87,7 +151,16 @@ function App() {
         </button>
         <br />
 
-        <button>count is {allData.startCount}</button>
+        <button
+          onClick={() => {
+            dispatch({
+              type: "CHANGE_COUNT",
+              newvalue: allData.startCount + 1,
+            });
+          }}
+        >
+          count is {allData.startCount}
+        </button>
       </div>
     </>
   );
